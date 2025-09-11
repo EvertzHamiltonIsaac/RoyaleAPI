@@ -3,13 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Decks = void 0;
 const mongoose_1 = require("mongoose");
 const decksSchema = new mongoose_1.Schema({
-    arena_number: Number,
+    user_id: { type: mongoose_1.Types.ObjectId, Ref: 'Users' },
     name: String,
-    description: String,
-    trophy_requirement: Number,
-    image_url: String,
-    background_url: String,
-    is_active: Boolean,
-    release_date: { type: Date, default: Date.now },
+    is_main: { type: Boolean, default: false },
+    total_elixir_cost: { type: Number, default: 0 },
+    wins: { type: Number, default: 0 },
+    losses: { type: Number, default: 0 },
 }, { timestamps: true });
 exports.Decks = (0, mongoose_1.model)('Decks', decksSchema);
