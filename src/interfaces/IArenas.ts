@@ -1,4 +1,5 @@
-export default interface IArena {
+import mongoose from 'mongoose';
+export default interface IArena extends mongoose.Document {
   arena_number: number;
   name: string;
   description: string;
