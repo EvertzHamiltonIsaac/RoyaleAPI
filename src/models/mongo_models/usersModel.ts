@@ -3,11 +3,11 @@ import IUser from '../../interfaces/IUsers';
 
 const UsersSchema = new Schema<IUser>(
   {
-    username: String,
-    email: String,
+    username: { type: String, required: true, unique: true },
+    email: { type: String, required: true, unique: true },
     password_hash: String,
-    last_sign: Date,
-    is_active: String,
+    last_sign: { type: Date, required: true, default: Date.now() },
+    is_active: Boolean,
   },
   { timestamps: true },
 );

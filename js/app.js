@@ -35,7 +35,11 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.app = void 0;
 const express_1 = __importStar(require("express"));
+const usersRoutes_1 = require("./routes/usersRoutes");
 //* App declaration
 exports.app = (0, express_1.default)();
+//TODO: Necesita manejo de sesion y tambien metodos de autenticación
+//TODO: Necesita Encriptación de contraseña, para guardar el Hash en users.
 //Middlewares
 exports.app.use((0, express_1.json)());
+exports.app.use('/api/v1', usersRoutes_1.userRouter);
