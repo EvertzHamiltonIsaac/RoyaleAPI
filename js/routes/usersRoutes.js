@@ -8,4 +8,5 @@ const express_1 = __importDefault(require("express"));
 const usersController_1 = require("../controllers/usersController");
 exports.userRouter = express_1.default.Router();
 exports.userRouter.route('/users').post(usersController_1.createUser).get(usersController_1.findUsers);
-exports.userRouter.route('/user/:id').get(usersController_1.findUser);
+exports.userRouter.route('/users/disable').patch(usersController_1.disableAllUsers);
+exports.userRouter.route('/user/:id').get(usersController_1.findUser).put(usersController_1.updateUser).delete(usersController_1.deleteUser);

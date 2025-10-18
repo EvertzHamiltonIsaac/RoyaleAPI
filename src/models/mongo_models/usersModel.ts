@@ -6,6 +6,7 @@ const UsersSchema = new Schema<IUser>(
     username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     password_hash: String,
+    is_Disabled: { type: Boolean, default: false },
     last_sign: { type: Date, required: true, default: Date.now() },
     is_active: Boolean,
   },

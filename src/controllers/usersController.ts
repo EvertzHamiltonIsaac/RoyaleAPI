@@ -1,8 +1,9 @@
+import IUser from '../interfaces/IUsers';
 import { Users } from '../models/mongo_models/usersModel';
 import { Request, Response } from 'express';
 
 export const createUser = async (req: Request, res: Response) => {
-  const { username, email, password_hash, last_sign, is_active } = req.body;
+  const { username, email, password_hash, last_sign, is_active }: IUser = req.body;
 
   try {
     const newUser = await Users.create({
@@ -62,6 +63,60 @@ export const findUser = async (req: Request, res: Response) => {
   }
 };
 
-export const updateUsers = async (req: Request, res: Response) => {};
-export const disableUsers = async (req: Request, res: Response) => {};
-export const deleteUsers = async (req: Request, res: Response) => {};
+export const updateUser = async (req: Request, res: Response) => {
+  try {
+    const userUpdated = await Users.findByIdAndUpdate(req.params.id, req.body, { new: true });
+
+    res.status(200).json({
+      status: 'user updated successfully!',
+      data: userUpdated,
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'failed!',
+      message: 'Error Getting the User',
+      error: err,
+    });
+    throw err;
+  }
+};
+
+export const deleteUser = async (req: Request, res: Response) => {
+  try {
+    const userDeleted = await Users.findByIdAndDelete(req.params.id, req.body);
+
+    res.status(200).json({
+      status: 'user deleted successfully!',
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'failed!',
+      message: 'Error Getting the User',
+      error: err,
+    });
+    throw err;
+  }
+};
+
+export const disableAllUsers = async (req: Request, res: Response) => {
+  try {
+    const { disable }: { disable: boolean } = req.body;
+
+    const usersUpdated = await Users.updateMany(
+      { is_active: { $in: [true, false] } },
+      { $set: { is_Disabled: disable } },
+    );
+
+    res.status(200).json({
+      status: 'users updated successfully!',
+      data: usersUpdated,
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'failed!',
+      message: 'Error updating Users',
+      error: err,
+    });
+    throw err;
+  }
+};

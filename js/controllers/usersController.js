@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUsers = exports.disableUsers = exports.updateUsers = exports.findUser = exports.findUsers = exports.createUser = void 0;
+exports.disableAllUsers = exports.deleteUser = exports.updateUser = exports.findUser = exports.findUsers = exports.createUser = void 0;
 const usersModel_1 = require("../models/mongo_models/usersModel");
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, email, password_hash, last_sign, is_active } = req.body;
@@ -73,9 +73,58 @@ const findUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.findUser = findUser;
-const updateUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () { });
-exports.updateUsers = updateUsers;
-const disableUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () { });
-exports.disableUsers = disableUsers;
-const deleteUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () { });
-exports.deleteUsers = deleteUsers;
+const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userUpdated = yield usersModel_1.Users.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        res.status(200).json({
+            status: 'user updated successfully!',
+            data: userUpdated,
+        });
+    }
+    catch (err) {
+        res.status(404).json({
+            status: 'failed!',
+            message: 'Error Getting the User',
+            error: err,
+        });
+        throw err;
+    }
+});
+exports.updateUser = updateUser;
+const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userDeleted = yield usersModel_1.Users.findByIdAndDelete(req.params.id, req.body);
+        res.status(200).json({
+            status: 'user deleted successfully!',
+            data: userDeleted,
+        });
+    }
+    catch (err) {
+        res.status(404).json({
+            status: 'failed!',
+            message: 'Error Getting the User',
+            error: err,
+        });
+        throw err;
+    }
+});
+exports.deleteUser = deleteUser;
+const disableAllUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { disable } = req.body;
+        const usersUpdated = yield usersModel_1.Users.updateMany({ is_active: { $in: [true, false] } }, { $set: { is_Disabled: disable } });
+        res.status(200).json({
+            status: 'user deleted successfully!',
+            data: usersUpdated,
+        });
+    }
+    catch (err) {
+        res.status(404).json({
+            status: 'failed!',
+            message: 'Error updating Users',
+            error: err,
+        });
+        throw err;
+    }
+});
+exports.disableAllUsers = disableAllUsers;
