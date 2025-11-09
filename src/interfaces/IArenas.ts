@@ -8,4 +8,5 @@ export default interface IArena extends mongoose.Document {
   background_url: string;
   is_active: boolean;
   release_date: Date;
+  is_disabled: boolean;
 }

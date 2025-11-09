@@ -10,6 +10,7 @@ const arenasSchema = new mongoose_1.Schema({
     image_url: String,
     background_url: String,
     is_active: Boolean,
+    is_disabled: { type: Boolean, default: false },
     release_date: { type: Date, default: Date.now },
 }, { timestamps: true });
 exports.Arenas = (0, mongoose_1.model)('Arenas', arenasSchema);

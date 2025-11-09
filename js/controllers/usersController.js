@@ -96,7 +96,6 @@ const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         const userDeleted = yield usersModel_1.Users.findByIdAndDelete(req.params.id, req.body);
         res.status(200).json({
             status: 'user deleted successfully!',
-            data: userDeleted,
         });
     }
     catch (err) {
@@ -114,7 +113,7 @@ const disableAllUsers = (req, res) => __awaiter(void 0, void 0, void 0, function
         const { disable } = req.body;
         const usersUpdated = yield usersModel_1.Users.updateMany({ is_active: { $in: [true, false] } }, { $set: { is_Disabled: disable } });
         res.status(200).json({
-            status: 'user deleted successfully!',
+            status: 'users updated successfully!',
             data: usersUpdated,
         });
     }

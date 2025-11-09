@@ -36,6 +36,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.app = void 0;
 const express_1 = __importStar(require("express"));
 const usersRoutes_1 = require("./routes/usersRoutes");
+const arenasRoutes_1 = require("./routes/arenasRoutes");
+const cardsRoutes_1 = require("./routes/cardsRoutes");
 //* App declaration
 exports.app = (0, express_1.default)();
 //TODO: Necesita manejo de sesion y tambien metodos de autenticación
@@ -43,3 +45,5 @@ exports.app = (0, express_1.default)();
 //Middlewares
 exports.app.use((0, express_1.json)());
 exports.app.use('/api/v1', usersRoutes_1.userRouter);
+exports.app.use('/api/v1', arenasRoutes_1.arenaRouter);
+exports.app.use('/api/v1', cardsRoutes_1.cardsRouter);

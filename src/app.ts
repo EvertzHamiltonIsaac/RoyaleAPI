@@ -1,5 +1,7 @@
 import express, { json } from 'express';
 import { userRouter } from './routes/usersRoutes';
+import { arenaRouter } from './routes/arenasRoutes';
+import { cardsRouter } from './routes/cardsRoutes';
 
 //* App declaration
 export const app = express();
@@ -9,3 +11,5 @@ export const app = express();
 //Middlewares
 app.use(json());
 app.use('/api/v1', userRouter);
+app.use('/api/v1', arenaRouter);
+app.use('/api/v1', cardsRouter);

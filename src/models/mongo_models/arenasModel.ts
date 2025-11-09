@@ -10,6 +10,7 @@ const arenasSchema = new Schema<IArena>(
     image_url: String,
     background_url: String,
     is_active: Boolean,
+    is_disabled: { type: Boolean, default: false },
     release_date: { type: Date, default: Date.now },
   },
   { timestamps: true },
