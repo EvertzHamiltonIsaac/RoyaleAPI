@@ -38,12 +38,17 @@ const express_1 = __importStar(require("express"));
 const usersRoutes_1 = require("./routes/usersRoutes");
 const arenasRoutes_1 = require("./routes/arenasRoutes");
 const cardsRoutes_1 = require("./routes/cardsRoutes");
+const profilesRoutes_1 = require("./routes/profilesRoutes");
+const deckRoutes_1 = require("./routes/deckRoutes");
 //* App declaration
 exports.app = (0, express_1.default)();
 //TODO: Necesita manejo de sesion y tambien metodos de autenticación
 //TODO: Necesita Encriptación de contraseña, para guardar el Hash en users.
 //Middlewares
+const api_version = '/api/v1';
 exports.app.use((0, express_1.json)());
-exports.app.use('/api/v1', usersRoutes_1.userRouter);
-exports.app.use('/api/v1', arenasRoutes_1.arenaRouter);
-exports.app.use('/api/v1', cardsRoutes_1.cardsRouter);
+exports.app.use(api_version, usersRoutes_1.userRouter);
+exports.app.use(api_version, arenasRoutes_1.arenaRouter);
+exports.app.use(api_version, cardsRoutes_1.cardsRouter);
+exports.app.use(api_version, profilesRoutes_1.profilesRouter);
+exports.app.use(api_version, deckRoutes_1.decksRouter);

@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.disableAllUsers = exports.deleteUser = exports.updateUser = exports.findUser = exports.findUsers = exports.createUser = void 0;
 const usersModel_1 = require("../models/mongo_models/usersModel");
+//TODO: Cuando se cree un usuario debe crearse un profile automaticamente, este profile esta atado al usuario creado.
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, email, password_hash, last_sign, is_active } = req.body;
     try {

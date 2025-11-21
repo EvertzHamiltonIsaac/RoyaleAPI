@@ -2,6 +2,8 @@ import IUser from '../interfaces/IUsers';
 import { Users } from '../models/mongo_models/usersModel';
 import { Request, Response } from 'express';
 
+//TODO: Cuando se cree un usuario debe crearse un profile automaticamente, este profile esta atado al usuario creado.
+
 export const createUser = async (req: Request, res: Response) => {
   const { username, email, password_hash, last_sign, is_active }: IUser = req.body;
 

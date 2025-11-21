@@ -2,14 +2,19 @@ import express, { json } from 'express';
 import { userRouter } from './routes/usersRoutes';
 import { arenaRouter } from './routes/arenasRoutes';
 import { cardsRouter } from './routes/cardsRoutes';
-
+import { profilesRouter } from './routes/profilesRoutes';
+import { decksRouter } from './routes/deckRoutes';
 //* App declaration
 export const app = express();
 
 //TODO: Necesita manejo de sesion y tambien metodos de autenticación
 //TODO: Necesita Encriptación de contraseña, para guardar el Hash en users.
 //Middlewares
+const api_version = '/api/v1';
+
 app.use(json());
-app.use('/api/v1', userRouter);
-app.use('/api/v1', arenaRouter);
-app.use('/api/v1', cardsRouter);
+app.use(api_version, userRouter);
+app.use(api_version, arenaRouter);
+app.use(api_version, cardsRouter);
+app.use(api_version, profilesRouter);
+app.use(api_version, decksRouter);

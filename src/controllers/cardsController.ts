@@ -2,6 +2,8 @@ import ICard from '../interfaces/ICards';
 import { Cards } from '../models/mongo_models/cardsModel';
 import { Request, Response } from 'express';
 
+//! BUG: No se comprueba si verdaderamente existe lo que se quiere actualizar o lo que se quiere eliminar.
+
 // CREATE
 export const createCard = async (req: Request, res: Response) => {
   const { name, rarity, type, elixir, arena_id, description, url_image, stats, max_level }: ICard = req.body;
@@ -74,7 +76,7 @@ export const findCard = async (req: Request, res: Response) => {
 export const updateCard = async (req: Request, res: Response) => {
   try {
     const cardUpdated = await Cards.findByIdAndUpdate(req.params.id, req.body, { new: true });
-
+    if (cardUpdated === null) throw 'card not exist';
     res.status(200).json({
       status: 'card updated successfully!',
       data: cardUpdated,

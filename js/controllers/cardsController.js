@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteCard = exports.updateCard = exports.findCard = exports.findCards = exports.createCard = void 0;
 const cardsModel_1 = require("../models/mongo_models/cardsModel");
+//! BUG: No se comprueba si verdaderamente existe lo que se quiere actualizar o lo que se quiere eliminar.
 // CREATE
 const createCard = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name, rarity, type, elixir, arena_id, description, url_image, stats, max_level } = req.body;
@@ -84,6 +85,8 @@ exports.findCard = findCard;
 const updateCard = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const cardUpdated = yield cardsModel_1.Cards.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        if (cardUpdated === null)
+            throw 'card not exist';
         res.status(200).json({
             status: 'card updated successfully!',
             data: cardUpdated,
