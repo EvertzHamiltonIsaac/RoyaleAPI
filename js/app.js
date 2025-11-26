@@ -40,6 +40,8 @@ const arenasRoutes_1 = require("./routes/arenasRoutes");
 const cardsRoutes_1 = require("./routes/cardsRoutes");
 const profilesRoutes_1 = require("./routes/profilesRoutes");
 const deckRoutes_1 = require("./routes/deckRoutes");
+const deckcardsRoutes_1 = require("./routes/deckcardsRoutes");
+const usercardsRoutes_1 = require("./routes/usercardsRoutes");
 //* App declaration
 exports.app = (0, express_1.default)();
 //TODO: Necesita manejo de sesion y tambien metodos de autenticación
@@ -52,3 +54,5 @@ exports.app.use(api_version, arenasRoutes_1.arenaRouter);
 exports.app.use(api_version, cardsRoutes_1.cardsRouter);
 exports.app.use(api_version, profilesRoutes_1.profilesRouter);
 exports.app.use(api_version, deckRoutes_1.decksRouter);
+exports.app.use(api_version, deckcardsRoutes_1.deckCardRouter);
+exports.app.use(api_version, usercardsRoutes_1.userCardRouter);
