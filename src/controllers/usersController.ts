@@ -3,7 +3,7 @@ import { Users } from '../models/mongo_models/usersModel';
 import { Request, Response } from 'express';
 
 //TODO: Cuando se cree un usuario debe crearse un profile automaticamente, este profile esta atado al usuario creado.
-
+//TODO: Agregar Filtering en cada Get All de cada Entidad
 export const createUser = async (req: Request, res: Response) => {
   const { username, email, password_hash, last_sign, is_active }: IUser = req.body;
 
@@ -30,7 +30,10 @@ export const createUser = async (req: Request, res: Response) => {
 
 export const findUsers = async (req: Request, res: Response) => {
   try {
-    const AllUsers = await Users.find();
+    //Primera forma, forma sencilla
+    const query = Users.find({ is_active: req.query.is_active });
+    const AllUsers = await query;
+
     res.status(200).json({
       status: 'success!',
       results: AllUsers.length,

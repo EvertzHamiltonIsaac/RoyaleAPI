@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.disableAllUsers = exports.deleteUser = exports.updateUser = exports.findUser = exports.findUsers = exports.createUser = void 0;
 const usersModel_1 = require("../models/mongo_models/usersModel");
 //TODO: Cuando se cree un usuario debe crearse un profile automaticamente, este profile esta atado al usuario creado.
+//TODO: Agregar Filtering en cada Get All de cada Entidad
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, email, password_hash, last_sign, is_active } = req.body;
     try {
@@ -37,7 +38,9 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 exports.createUser = createUser;
 const findUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const AllUsers = yield usersModel_1.Users.find();
+        //Primera forma, forma sencilla
+        const query = usersModel_1.Users.find({ is_active: req.query.is_active });
+        const AllUsers = yield query;
         res.status(200).json({
             status: 'success!',
             results: AllUsers.length,

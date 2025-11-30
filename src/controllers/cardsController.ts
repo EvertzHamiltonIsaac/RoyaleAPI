@@ -1,8 +1,17 @@
-import ICard from '../interfaces/ICards';
+import ICard, { Rarity } from '../interfaces/ICards';
 import { Cards } from '../models/mongo_models/cardsModel';
 import { Request, Response } from 'express';
 
 //! BUG: No se comprueba si verdaderamente existe lo que se quiere actualizar o lo que se quiere eliminar.
+
+//TODO: Agregar que la parte de Excluir los campos ['page', 'sort', 'limit', 'fields'] del req.query sea global en el API.
+
+//TODO: Por alguna razon el ID de los Stats no son staticos cambian con cada petición al Get All Cards.
+
+//TODO: Investigar si hayt alguna forma de hacer que de error cuando no se cumplo lo que pusimos en el Enum para este modelo.
+
+//TODO: El query debe aceptar independiente cada campo y en caso de que aparezca uno entonces si tomarlo en cuenta, todo esto en el Filtering Get All Cards.
+// Hacer una funcion que construya el query antes de implementarlo para lograr esto
 
 // CREATE
 export const createCard = async (req: Request, res: Response) => {
@@ -37,7 +46,26 @@ export const createCard = async (req: Request, res: Response) => {
 // READ ALL
 export const findCards = async (req: Request, res: Response) => {
   try {
-    const allCards = await Cards.find().populate('arena_id'); // populate para traer info de la Arena
+    let queryObj = { ...req.query };
+    const excludedFields = ['page', 'sort', 'limit', 'fields'];
+    excludedFields.forEach((el) => delete queryObj[el]);
+
+    let queryStr = JSON.stringify(queryObj); // Volvemos el objeto en String.
+    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
+
+    let query = Cards.find().populate('arena_id');
+    // .where('rarity')
+    // .equals(req.query.rarity)
+    // .and([{ type: req.query.type }]); // populate para traer info de la Arena
+
+    if (req.query.sort) {
+      query = query.sort(`${req.query.sort}`);
+    } else {
+      query = query.sort(`-createdAt`);
+    }
+
+    const allCards = await query;
+
     res.status(200).json({
       status: 'success!',
       results: allCards.length,

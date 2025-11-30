@@ -11,6 +11,9 @@ export const app = express();
 
 //TODO: Necesita manejo de sesion y tambien metodos de autenticación
 //TODO: Necesita Encriptación de contraseña, para guardar el Hash en users.
+//TODO: Crear una carpeta de Middlewares para guardarlos todos ahi.
+
+app.set('query parser', 'extended'); //Hace que las URL con Query String puedan leer el lo que esta dentro de corchetes gte, gt, lt, lte
 
 //Middlewares
 const api_version = '/api/v1';
