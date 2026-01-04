@@ -3,7 +3,14 @@ import { Users } from '../models/mongo_models/usersModel';
 import { Request, Response } from 'express';
 
 //TODO: Cuando se cree un usuario debe crearse un profile automaticamente, este profile esta atado al usuario creado.
+
 //TODO: Agregar Filtering en cada Get All de cada Entidad
+
+//TODO: Agregar que la parte de Excluir los campos ['page', 'sort', 'limit', 'fields'] del req.query sea global en el API.
+//TODO: Por alguna razon el ID de los Stats no son staticos cambian con cada petición al Get All Cards.
+//TODO: Investigar si hay alguna forma de hacer que de error cuando no se cumplo lo que pusimos en el Enum para este modelo.
+//TODO: El query debe aceptar independiente cada campo y en caso de que aparezca uno entonces si tomarlo en cuenta, todo esto en el Filtering Get All Cards.
+
 export const createUser = async (req: Request, res: Response) => {
   const { username, email, password_hash, last_sign, is_active }: IUser = req.body;
 
